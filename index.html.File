@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSP Customer's Survey</title>
+    <em><meta name="description" content="Thank you for taking your time to help us improve"></em>
+    <style>
+        body {
+    
+        }
+        .survey-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Adding a semi-transparent white background */
+            border-radius: 10px;
+        }
+        h1 {
+            color: greenyellow;
+            text-align: center;
+        }
+        .frame {
+            border: 2px solid #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;  
+        }
+        .meta-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .option-label {
+            flex: 1;
+            text-align: center;
+        }
+        button[type="submit"] {
+            background-color: green;
+            color: greenyellow;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .viewer-count {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>BSP Customer Survey</h1>
+    <div class="survey-container">
+        <div class="meta-message">
+            <em><p>Thank you for taking your time to help us improve.</p></em>
+        </div>
+        <form id="surveyForm" action="submit_survey.php" method="post">
+            <div class="frame">
+            <div class="question">
+                <strong><p>How is our services to you?</p></strong>
+                <p><label class="rating-label">Overall satisfaction:</label></p>
+                <p><input type="radio" name="overall_satisfaction" value="5">Very Satisfied</p>
+                <p><input type="radio" name="overall_satisfaction" value="4">Satisfied</p>
+                <p><input type="radio" name="overall_satisfaction" value="3">Neutral</p>
+                <p><input type="radio" name="overall_satisfaction" value="2">Dissatisfied</p>
+                <p><input type="radio" name="overall_satisfaction" value="1">Very Dissatisfie</p>
+            </div>
+        </div>
+        <!-- Add more questions and options here -->
+        <button type="submit">Submit Survey</button>
+    </form>
+    <div class="viewer-count" id="viewerCount">Viewer Count: 0</div>
+    <div class="voter-figures" id="voterFigures"></div>
+</div>
+
+<script>
+    const form = document.getElementById("surveyForm");
+    const viewerCountElement = document.getElementById("viewerCount");
+    const voterFiguresElement = document.getElementById("voterFigures");
+    let viewerCount = 0;
+    let voterFigures = [0, 0, 0, 0, 0]; // Represents Very Satisfied to Very Dissatisfied
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        viewerCount++;
+        viewerCountElement.textContent = `Viewer Count: ${viewerCount}`;
+        
+        const satisfactionOptions = document.querySelectorAll('input[name="satisfaction"]');
+        for (let i = 0; i < satisfactionOptions.length; i++) {
+            if (satisfactionOptions[i].checked) {
+                voterFigures[i]++;
+            }
+        }
+        
+        updateVoterFigures();
+        // You can add your JavaScript code here to handle form submission
+        // For example, sending data to the server or displaying a thank you message
+        alert("Thank you for participating in the survey!");
+    });
+
+    function updateVoterFigures() {
+        const labels = ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied", "Very Dissatisfied"];
+        let figuresHtml = "<strong>Voter Figures:</strong><br>";
+        for (let i = 0; i < voterFigures.length; i++) {
+            figuresHtml += `${labels[i]}: ${voterFigures[i]}<br>`;
+        }
+        voterFiguresElement.innerHTML = figuresHtml;
+    }
+</script>
+</body>
+</html>
